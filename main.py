@@ -1,14 +1,26 @@
-meme_dict = {
-            "АГРИТЬСЯ": "Злиться",
-            "ЛОЛ": "Что-то очень смешное",
-            "РОФЛ": "Шутка",
-            "ЩИЩ": "Одобрение или восторг",
-            "КРИПОВЫЙ": "Страшный, Пугающий",
-            "КРИНЖ": "Что-то очень странное или стыдное",
-            }
+import random
+import discord
+import os
 
-word = input("Введите непонятное слово: ").upper()
-if word in meme_dict.keys():
-    print(meme_dict[word])
-else:
-    print('Такого слова в моей базе нету')
+
+
+
+from discord.ext import commands
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+
+bot = commands.Bot(command_prefix='$', intents=intents)
+@bot.command()
+async def mem(ctx):
+    lst = os.listdir('image')
+    rand_img = random.choice(lst)
+    with open('image/' + rand_img, 'rb') as f:
+
+        # В переменную кладем файл, который преобразуется в файл библиотеки Discord!
+        picture = discord.File(f)
+   # Можем передавать файл как параметр!
+    await ctx.send(file=picture)
+
+bot.run("")
